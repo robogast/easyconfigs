@@ -5,8 +5,7 @@ homepage = 'https://www.intel.com/content/www/us/en/developer/tools/oneapi/onedn
 description = 'oneAPI Deep Neural Network Library (oneDNN) '
 
 toolchain = {'name': 'intel', 'version': '2021a'}
-toolchainopts = {'oneapi': True, 'extra_cxxflags': '-ltbb'}
-#toolchainopts = {'oneapi': True}
+toolchainopts = {'oneapi': True, 'extra_cxxflags': '-Wl,--as-needed -ltbb -Wno-unused-command-line-argument'}
 
 sources = [{
     'filename': "%(name)s-%(version)s.tar.gz",
@@ -21,14 +20,13 @@ easyblock = 'CMakeMake'
 
 builddependencies = [('CMake', '3.20.1')]
 dependencies = [
-    ('oneTBB', '2021.5.0', '0a52112')
+    ('tbb', '2020.3')
 ]
 
 configopts = ' '.join([
-    '-DDNNL_CPU_RUNTIME=DPCPP',
-    '-DDNNL_GPU_RUNTIME=DPCPP',
-#    '-DDNNL_BUILD_TESTS=OFF',
-#    '-DDNNL_BUILD_EXAMPLES=OFF',
+    '-DDNNL_CPU_RUNTIME=TBB',
+    '-DDNNL_ENABLE_CONCURRENT_EXEC=1',
+    '-DDNNL_ENABLE_PRIMITIVE_CACHE=1',
 ])
 
 sanity_check_paths = {
