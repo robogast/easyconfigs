@@ -1,0 +1,34 @@
+name = 'oneCCL'
+version = '2021.5.2'
+
+homepage = 'https://www.intel.com/content/www/us/en/developer/tools/oneapi/oneccl.html'
+description = 'Intel(R) oneAPI Collective Communications Library (oneCCL)'
+
+toolchain = {'name': 'intel', 'version': '2021a'}
+toolchainopts = {'oneapi': True}
+
+sources = [{
+    'filename': "%(name)s-%(version)s.tar.gz",
+    'git_config': {
+	'repo_name': 'oneCCL',
+	'url': 'https://github.com/oneapi-src',
+	'tag': '%(version)s'
+    }
+}]
+
+easyblock = 'CMakeMake'
+
+builddependencies = [('CMake', '3.20.1')]
+dependencies = [
+    ('numactl', '2.0.14')
+]
+
+configopts = '-DCOMPUTE_BACKEND=dpcpp'
+
+bin_lib_subdirs = ['']
+
+sanity_check_paths = {
+    'files': ['lib/libccl.so'],
+    'dirs': []
+}
+

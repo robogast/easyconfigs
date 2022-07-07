@@ -1,0 +1,29 @@
+name = 'LevelZero'
+version = '1.8.1'
+versionsuffix = '3a6a729'
+
+homepage = 'https://www.intel.com/content/www/us/en/develop/documentation/oneapi-dpcpp-cpp-compiler-dev-guide-and-reference/top/optimization-and-programming/intel-oneapi-level-zero.html'
+description = 'oneAPI Level Zero Specification Headers and Loader'
+
+toolchain = {'name': 'intel', 'version': '2021a'}
+toolchainopts = {'oneapi': True}
+
+sources = [{
+    'filename': "%(name)s-%(version)s.tar.gz",
+    'git_config': {
+	'repo_name': 'level-zero',
+	'url': 'https://github.com/robogast',
+	'commit': '%(versionsuffix)s'
+    }
+}]
+
+easyblock = 'CMakeMake'
+
+builddependencies = [('CMake', '3.20.1')]
+buildopts = '-v'
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['include', 'lib']
+}
+

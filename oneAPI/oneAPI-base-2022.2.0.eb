@@ -1,0 +1,19 @@
+name = 'oneAPI-base'
+version = '2022.2.0'
+subversion = '262'
+
+homepage = 'https://www.intel.com/content/www/us/en/developer/tools/oneapi/base-toolkit.html'
+description = "Intel oneAPI Base Toolkit"
+
+toolchain = SYSTEM
+
+# see https://software.intel.com/content/www/us/en/develop/articles/oneapi-standalone-components.html
+source_urls = ['https://registrationcenter-download.intel.com/akdlm/irc_nas/18673/']
+sources = ['l_Basekit_p_%(version)s.%(subversion)s_offline.sh']
+checksums = ['e508b0a64f048d9518cc3706e1fa3f400dbb0a07fdc0f91e02b371b18a35715fa0fad7a960dbb7fc04595f77ae65a333']
+
+interfaces = False
+
+installopts = "--download-cache=%(builddir)s/cache --download-dir=%(builddir)s/download --log-dir=%(builddir)s/log"
+
+moduleclass = 'system'

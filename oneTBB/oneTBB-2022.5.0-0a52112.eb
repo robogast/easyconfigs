@@ -1,0 +1,30 @@
+easyblock = 'CMakeMake'
+name = 'oneTBB'
+version = '2021.5.0'
+versionsuffix = '0a52112'
+
+homepage = 'https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html'
+description = 'oneAPI Threading Building Blocks (oneTBB)'
+
+toolchain = {'name': 'intel', 'version': '2021a'}
+toolchainopts = {'oneapi': True, 'extra_cxxflags: '-Wno-unused-command-line-argument'}
+
+# modextravars = {'TBBROOT': '%(installdir)s'}
+
+sources = [{
+    'filename': "%(name)s-%(version)s.tar.gz",
+    'git_config': {
+	'repo_name': 'oneTBB',
+	'url': 'https://github.com/oneapi-src',
+#	'tag': 'v%(version)s'
+	'commit': '%(versionsuffix)s'
+    }
+}]
+
+builddependencies = [('CMake', '3.20.1')]
+
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['lib', 'include']
+}

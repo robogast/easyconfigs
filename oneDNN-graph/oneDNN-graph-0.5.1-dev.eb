@@ -1,0 +1,60 @@
+name = 'oneDNN-graph'
+version = '0.5.1'
+versionsuffix = 'dev'
+
+homepage = 'https://www.intel.com/content/www/us/en/developer/tools/oneapi/onednn.html'
+description = 'oneAPI Deep Neural Network Library Graph API (oneDNN Graph)'
+
+toolchain = {'name': 'intel', 'version': '2021a'}
+toolchainopts = {
+    'oneapi': True,
+    'extra_cflags': '-Wl,--as-needed -ltbb -Wno-unused-command-line-argument',
+    'extra_cxxflags': '-Wl,--as-needed -ltbb -Wno-unused-command-line-argument -Wno-undefined-var-template'
+}
+#toolchainopts = {'oneapi': True}
+
+sources = [{
+    'filename': "%(name)s-%(version)s.tar.gz",
+    'git_config': {
+	'recursive': True,
+	'repo_name': 'oneDNN',
+	'url': 'https://github.com/oneapi-src',
+	'commit': '9048b4d',
+    }
+}]
+
+easyblock = 'CMakeMake'
+
+builddependencies = [('CMake', '3.20.1')]
+dependencies = [
+    ('tbb', '2020.3'), # GCCcore-10.3.0
+#    ('oneTBB', '2021.5.0', '0a52112'),
+    ('LLVM', '12.0.1'), 
+#    ('oneDNN', '2.6')
+]
+
+configopts = ' '.join([
+    # oneDNN options 
+    '-DDNNL_CPU_RUNTIME=DPCPP',
+    '-DDNNL_GPU_RUNTIME=DPCPP',
+    '-DDNNL_ENABLE_CONCURRENT_EXEC=1',
+    # oneDNN-graph options
+    '-DDNNL_GRAPH_BUILD_COMPILER_BACKEND=1',
+#    '-DDNNL_BUILD_TESTS=OFF',
+#    '-DDNNL_BUILD_EXAMPLES=OFF',
+    '-DDNNL_GRAPH_CPU_RUNTIME=TBB',
+    '-DDNNL_GRAPH_GPU_RUNTIME=NONE',
+    '-DDNNL_GRAPH_BUILD_EXAMPLES=1',
+    '-DDNNL_GRAPH_BUILD_TESTS=1',
+    # '-DDNNL_GRAPH_LLVM_CONFIG=CMAKE',
+    '-DDNNL_GRAPH_SUPPORT_CXX17=1',
+    '-DDNNL_GRAPH_BUILD_COMPILER_BACKEND=ON',
+    '-Dcheck_headers_cmake_included=1',
+])
+
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['include', 'lib']
+}
+

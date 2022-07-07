@@ -1,0 +1,44 @@
+# Nice way of installing an EasyBuild installation from the develop branch...
+# Install with 'eblocalinstall --force-download ...' to make sure you get the latest version
+easyblock = 'EB_EasyBuildMeta'
+name = 'EasyBuild'
+version = '4.5.5'
+versionsuffix = '-develop'
+homepage = 'https://easybuilders.github.io/easybuild'
+description = """EasyBuild is a software build and installation framework
+ written in Python that allows you to install software in a structured,
+ repeatable and robust way."""
+toolchain = SYSTEM
+sources = [
+    {
+        'source_urls': ['https://github.com/easybuilders/easybuild-framework/archive/'],
+        'download_filename': 'develop.tar.gz',
+        'filename': 'easybuild-framework-develop.tar.gz',
+    },
+    {
+        'source_urls': ['https://github.com/easybuilders/easybuild-easyblocks/archive/'],
+        'download_filename': 'develop.tar.gz',
+        'filename': 'easybuild-easyblocks-develop.tar.gz',
+    },
+    {
+        'source_urls': ['https://github.com/easybuilders/easybuild-easyconfigs/archive/'],
+        'download_filename': 'develop.tar.gz',
+        'filename': 'easybuild-easyconfigs-develop.tar.gz',
+    },
+]
+checksums = [
+    'c931476019cbb7b595b07df59e3a7769106d1660b693daccb8eaf632ed03734a',  # easybuild-framework-develop.tar.gz
+    'b1d0c30ed7d75166c43285f73275be9e9598f740a7b5cc658671b97f68b492d7',  # easybuild-easyblocks-develop.tar.gz
+    '52ec6d22126065d004e8a806b3d8fec4d8252f4ecb110edfe59f5e6969083330',  # easybuild-easyconfigs-develop.tar.gz
+]
+
+# order matters a lot, to avoid having dependencies auto-resolved (--no-deps easy_install option doesn't work?)
+# EasyBuild is a (set of) Python packages, so it depends on Python
+# usually, we want to use the system Python, so no actual Python dependency is listed
+allow_system_deps = [('Python', SYS_PYTHON_VERSION)]
+local_pyshortver = '.'.join(SYS_PYTHON_VERSION.split('.')[:2])
+sanity_check_paths = {
+    'files': ['bin/eb'],
+    'dirs': ['lib/python%s/site-packages' % local_pyshortver],
+}
+moduleclass = 'tools'

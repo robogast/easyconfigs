@@ -1,0 +1,35 @@
+name = 'libvips'
+version = '8.13.0-rc1'
+
+homepage = 'https://libvips.github.io/libvips/'
+description = 'A fast image processing library with low memory needs.'
+
+toolchain = {'name': 'GCCcore', 'version': '10.3.0'}
+
+sources = [{
+    'filename': "%(name)s-%(version)s.tar.gz",
+    'git_config': {
+	'repo_name': 'libvips',
+	'url': 'https://github.com/libvips',
+	'tag': 'v%(version)s'
+    }
+}]
+
+easyblock = 'MesonNinja'
+
+builddependencies = [
+    ('Meson', '0.58.0'),
+    ('Ninja', '1.10.2'),
+    ('CMake', '3.20.1'),
+    ('pkg-config', '0.29.2'),
+    ('GObject-Introspection', '1.68.0'),
+]
+
+dependencies = [
+    ('GLib', '2.68.2'),
+    ('expat', '2.2.9'),
+    ('libjpeg-turbo', '2.0.6'),
+    ('libpng', '1.6.37'),
+]
+
+buildopts = ' -v '

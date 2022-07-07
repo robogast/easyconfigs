@@ -1,0 +1,38 @@
+name = 'oneDNN'
+version = '2.6'
+
+homepage = 'https://www.intel.com/content/www/us/en/developer/tools/oneapi/onednn.html'
+description = 'oneAPI Deep Neural Network Library (oneDNN) '
+
+toolchain = {'name': 'intel', 'version': '2021a'}
+toolchainopts = {'oneapi': True, 'extra_cxxflags': '-ltbb'}
+#toolchainopts = {'oneapi': True}
+
+sources = [{
+    'filename': "%(name)s-%(version)s.tar.gz",
+    'git_config': {
+	'repo_name': 'oneDNN',
+	'url': 'https://github.com/oneapi-src',
+	'tag': 'v%(version)s'
+    }
+}]
+
+easyblock = 'CMakeMake'
+
+builddependencies = [('CMake', '3.20.1')]
+dependencies = [
+    ('oneTBB', '2021.5.0', '0a52112')
+]
+
+configopts = ' '.join([
+    '-DDNNL_CPU_RUNTIME=DPCPP',
+    '-DDNNL_GPU_RUNTIME=DPCPP',
+#    '-DDNNL_BUILD_TESTS=OFF',
+#    '-DDNNL_BUILD_EXAMPLES=OFF',
+])
+
+sanity_check_paths = {
+    'files': [],
+    'dirs': ['include', 'lib']
+}
+
