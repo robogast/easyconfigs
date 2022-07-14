@@ -1,0 +1,39 @@
+easyblock = 'ConfigureMake'
+
+name = 'FFmpeg'
+version = '5.0.1'
+
+homepage = 'https://www.ffmpeg.org/'
+description = "A complete, cross-platform solution to record, convert and stream audio and video."
+
+toolchain = {'name': 'GCCcore', 'version': '11.3.0'}
+
+source_urls = ['https://%(namelower)s.org/releases/']
+sources = [SOURCELOWER_TAR_BZ2]
+
+builddependencies = [
+    ('binutils', '2.38'),
+    ('pkg-config', '0.29.2'),
+]
+dependencies = [
+    ('NASM', '2.15.05'),
+    ('zlib', '1.2.12'),
+    ('bzip2', '1.0.8'),
+    ('x264', '20220602'),
+    ('LAME', '3.100'),
+    ('x265', '3.5'),
+    ('X11', '20220504'),
+    ('freetype', '2.12.1'),
+    ('fontconfig', '2.14.0'),
+    ('FriBidi', '1.0.12'),
+]
+
+configopts = '--enable-pic --enable-shared --enable-gpl --enable-version3 --enable-nonfree --cc="$CC" --cxx="$CXX" --enable-libx264 --enable-libx265 --enable-libmp3lame --enable-libfreetype --enable-fontconfig --enable-libfribidi'
+
+
+sanity_check_paths = {
+    'files': ['bin/%(namelower)s', 'bin/ffprobe', 'lib/libavdevice.so', 'lib/libavdevice.a', 'lib/libavfilter.so', 'lib/libavfilter.a', 'lib/libavformat.so', 'lib/libavformat.a', 'lib/libavcodec.so', 'lib/libavcodec.a', 'lib/libpostproc.so', 'lib/libpostproc.a', 'lib/libswresample.so', 'lib/libswresample.a', 'lib/libswscale.so', 'lib/libswscale.a', 'lib/libavutil.so', 'lib/libavutil.a'],
+    'dirs': ['include'],
+}
+
+moduleclass = 'vis'
