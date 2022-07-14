@@ -7,6 +7,7 @@ description = """Tensors and Dynamic neural networks in Python with strong GPU a
 PyTorch is a deep learning framework that puts Python first."""
 
 toolchain = {'name': 'intel', 'version': '2022a'}
+toolchainopts = {'oneapi': True}
 
 sources = [
     {'filename': SOURCE_TAR_GZ, 'git_config': {'url': 'https://github.com/%(namelower)s', 'repo_name': '%(namelower)s', 'tag': 'v%(version)s', 'recursive': True}},
